@@ -5,6 +5,8 @@ File containing utility functions for canny edge detector.
 import argparse
 import matplotlib.pyplot as plt
 import cv2
+import numpy as np
+from src.canny import img_convolve, gaussian_blur, sobel_gradients
 
 
 def parse_args():   
@@ -113,3 +115,46 @@ def plot_results(images, titles, cols=3, filename=None):
         plt.savefig(filename, dpi=150, bbox_inches='tight')
     
     plt.show()
+
+
+def roberts_edge(img):
+    """
+    Performs Roberts edge detection algorithm.
+    Uses 2 2x2 kernels to perform convolution on the image.
+    Returns magnitude containing edges.
+    """
+    Kx = np.array([[1, 0],
+                   [0, -1]], dtype=np.float64)
+
+    Ky = np.array([[0, 1],
+                   [-1, 0]], dtype=np.float64)
+    
+    Gx = img_convolve(img, Kx)
+    Gy = img_convolve(img, Ky)
+    
+    magnitude = np.sqrt(Gx**2 + Gy**2)
+    magnitude = (magnitude / magnitude.max()) * 255
+
+    return magnitude.astype(np.uint8)
+
+
+def sobel_edge(img):
+    """
+    Performs Sobel edge detection algorithm.
+    Implementation is same as in canny.py.
+    """
+    edges, angles = sobel_gradients(img)
+    edges = (edges / edges.max()) * 255
+
+    return edges.astype(np.uint8)
+
+
+def laplacian_of_gaussian(img):
+    """
+    Performs LoG algorithm using opencv.
+    """
+    blurred = gaussian_blur(img)
+    log = cv2.Laplacian(blurred, cv2.CV_64F)
+    log = (log / log.max()) * 255
+    
+    return np.uint8(np.absolute(log))
