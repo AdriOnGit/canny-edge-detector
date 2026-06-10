@@ -19,8 +19,8 @@ def parse_args():
     )
 
     parser.add_argument("-i", "--image",    required = True,                help = "Path to input image")
-    parser.add_argument("-s", "--size",     type = int,   default = 5,      help = "Gaussian kernel size")
-    parser.add_argument("-g", "--sigma",    type = float, default = 1.0,    help = "Gaussian sigma")
+    parser.add_argument("-k", "--kernel",     type = int,   default = 5,      help = "Gaussian kernel size")
+    parser.add_argument("-s", "--sigma",    type = float, default = 1.0,    help = "Gaussian sigma")
     parser.add_argument("-l", "--low",      type = float, default = 0.1,    help = "Low threshold ratio")
     parser.add_argument("-u", "--high",     type = float, default = 0.3,    help = "High threshold ratio")
 

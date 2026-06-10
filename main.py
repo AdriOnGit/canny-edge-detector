@@ -22,7 +22,7 @@ def main():
     grayscale = img_resize(grayscale)
     
     # Perform Canny Edge Detection on the grayscaled image.
-    images = canny_edge_detection(grayscale, args.size, args.sigma, args.low, args.high)
+    images = canny_edge_detection(grayscale, args.kernel, args.sigma, args.low, args.high)
     # Perform opencv's Canny Edge Detection on the grayscaled image.
     opencv_canny = cv2.Canny(grayscale, 100, 200)
     # Perform Robert's Edge Detection on the grayscaled image.
